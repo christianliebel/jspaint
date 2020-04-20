@@ -20,15 +20,14 @@ if ('chooseFileSystemEntries' in window) {
     }
 
     async function saveViaNativeFs(handle, canvas) {
-        const writer = await handle.createWriter();
+        const writable = await handle.createWritable();
 
         const mimeType = resolveMimeType(handle.name);
         const blob = await new Promise(resolve => canvas.toBlob(resolve, mimeType));
-        const buffer = await blob.arrayBuffer();
 
-        await writer.truncate(0);
-        await writer.write(0, buffer);
-        await writer.close();
+        await writable.truncate(0);
+        await writable.write(blob);
+        await writable.close();
     }
 
     window.save_to_file_path = async (handle, format, callback) => {
@@ -51,7 +50,7 @@ if ('chooseFileSystemEntries' in window) {
     window.systemSaveCanvasAs = async (canvas, fileName, savedCallbackUnreliable) => {
         // TODO: NativeFS currently doesn’t allow suggesting file names.
         const handle = await window.chooseFileSystemEntries({
-            type: 'saveFile',
+            type: 'save-file',
             accepts: acceptedFormats
         });
         await saveViaNativeFs(handle, canvas);

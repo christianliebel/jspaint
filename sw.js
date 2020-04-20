@@ -719,7 +719,7 @@ self.__precacheManifest = [
   },
   {
     "url": "src/nativefs.js",
-    "revision": "402f2cf2e6bcb8e6b707f1556274806f"
+    "revision": "42c100b8dda74df84115b70fd16e9201"
   },
   {
     "url": "src/OnCanvasObject.js",
